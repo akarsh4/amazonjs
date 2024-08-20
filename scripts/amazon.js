@@ -1,4 +1,6 @@
-import { cart } from "../data/cart.js ";
+import { cart, addTocart } from "../data/cart.js ";
+import { products } from "../data/products.js";
+import { totalProductsinCart } from "../data/cart.js";
 
 const productContainer = document.querySelector(".js-products-grid");
 
@@ -71,42 +73,37 @@ products.forEach((item) => {
     });
 });
 
+function totalProductsinCart() {
+  let totalQuantity = cart.reduce((total, product) => {
+    return (total += product.quantity);
+  }, 0);
+  return totalQuantity;
+}
+
+function addedCheckButton(productid) {
+  document
+    .querySelector(`.product-${productid}`)
+    .classList.add("js-added-to-cart-check");
+
+  timeout.productid = setTimeout(() => {
+    document
+      .querySelector(`.product-${productid}`)
+      .classList.remove("js-added-to-cart-check");
+  }, 3000);
+
+  if (timeout[productid]) {
+    clearTimeout(timeout[productid]);
+  }
+}
 document.querySelectorAll(".js-add-to-cart").forEach((button) => {
   button.addEventListener("click", () => {
-    console.log("hai");
     console.log(button.dataset.productId);
 
     const productid = button.dataset.productId;
-    const newProduct = {
-      productid,
-      quantity: total.productId === productid ? total.value : 1,
-    };
-
-    const product = cart.find((product) => product.productid === productid);
-    if (product) {
-      product.quantity = product.quantity + (total.value ? total.value : 1);
-    } else {
-      cart.push({ ...newProduct });
-    }
-    document
-      .querySelector(`.product-${productid}`)
-      .classList.add("js-added-to-cart-check");
-
-    timeout.productid = setTimeout(() => {
-      document
-        .querySelector(`.product-${productid}`)
-        .classList.remove("js-added-to-cart-check");
-    }, 3000);
-
-    if (timeout[productid]) {
-      clearTimeout(timeout[productid]);
-    }
-
-    let totalQuantity = cart.reduce((total, product) => {
-      return (total += product.quantity);
-    }, 0);
-
-    document.querySelector(".js-cart-quantity").innerHTML = totalQuantity;
+    addTocart(productid);
+    const totalProducts = totalProductsinCart();
+    document.querySelector(".js-cart-quantity").innerHTML = totalProducts;
+    addedCheckButton(productid);
     console.log(cart);
     console.log(totalQuantity);
   });
