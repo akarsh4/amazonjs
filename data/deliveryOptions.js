@@ -15,3 +15,13 @@ export const deliveryOptions = [
     priceCents: 999,
   },
 ];
+
+export function getDeliveryoptions(deliveryOptionId) {
+  let deliveryOption;
+  deliveryOptions.map((Option) => {
+    if (Option.id === deliveryOptionId) {
+      deliveryOption = Option;
+    }
+  });
+  return deliveryOption || deliveryOptions[0];
+}

@@ -1,9 +1,10 @@
 import { cart, deletFromCart, updateDeliveryOption } from "../../data/cart.js";
-import { products } from "../../data/products.js";
+import { getProducts, products } from "../../data/products.js";
 import { centsToDollar } from "../../utils/money.js";
 import { hello } from "https://unpkg.com/supersimpledev@1.0.1/hello.esm.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 import { deliveryOptions } from "../../data/deliveryOptions.js";
+import { renderPaymentSummary } from "./paymentSummary.js";
 
 hello();
 var today = dayjs();
@@ -26,12 +27,7 @@ export function renderOrderSummary() {
   cart.forEach((cartItem) => {
     const productId = cartItem.productid;
     console.log(productId);
-    let matchedProduct;
-    products.forEach((product) => {
-      if (productId === product.id) {
-        matchedProduct = product;
-      }
-    });
+    const matchedProduct = getProducts(productId);
     console.log(matchedProduct);
     const today = dayjs();
     const day = deliveryDate(cartItem);
@@ -120,6 +116,7 @@ export function renderOrderSummary() {
       );
       matcheCartItem.remove();
       renderOrderSummary();
+      renderPaymentSummary();
     });
   });
 
@@ -129,6 +126,7 @@ export function renderOrderSummary() {
       const { productId, deliveryOptionId } = option.dataset;
       updateDeliveryOption(productId, deliveryOptionId);
       renderOrderSummary();
+      renderPaymentSummary();
     });
   });
 }
