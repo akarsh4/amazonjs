@@ -1,6 +1,9 @@
-export const cart = [];
+export let cart = [
+  { productid: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6", quantity: 1 },
+  { productid: "a82c6bac-3067-4e68-a5ba-d827ac0be010", quantity: 2 },
+];
 
-export function addTocart(productid) {
+export function addTocart(productid, total) {
   const newProduct = {
     productid,
     quantity: total.productId === productid ? total.value : 1,
@@ -12,6 +15,15 @@ export function addTocart(productid) {
   } else {
     cart.push({ ...newProduct });
   }
+}
+
+export function deletFromCart(productId) {
+  let newcart = [];
+  newcart = cart.filter((item) => {
+    return item.productid !== productId;
+  });
+  console.log(newcart);
+  cart = newcart;
 }
 
 // function add(a, b, c) {

@@ -1,6 +1,5 @@
 import { cart, addTocart } from "../data/cart.js ";
 import { products } from "../data/products.js";
-import { totalProductsinCart } from "../data/cart.js";
 
 const productContainer = document.querySelector(".js-products-grid");
 
@@ -100,11 +99,11 @@ document.querySelectorAll(".js-add-to-cart").forEach((button) => {
     console.log(button.dataset.productId);
 
     const productid = button.dataset.productId;
-    addTocart(productid);
+    addTocart(productid, total);
     const totalProducts = totalProductsinCart();
     document.querySelector(".js-cart-quantity").innerHTML = totalProducts;
     addedCheckButton(productid);
     console.log(cart);
-    console.log(totalQuantity);
+    console.log(totalProducts);
   });
 });
