@@ -43,6 +43,18 @@ export function deletFromCart(productId) {
   saveToLocalStorage();
 }
 
+export function updateDeliveryOption(productid, deliveryOptionID) {
+  let mathingItem;
+  cart.forEach((element) => {
+    if (productid === element.productid) {
+      mathingItem = element;
+    }
+  });
+  mathingItem.deliveryOptionId = deliveryOptionID;
+  console.log(cart);
+  saveToLocalStorage();
+}
+
 // function add(a, b, c) {
 //   return a + b + c;
 // }
